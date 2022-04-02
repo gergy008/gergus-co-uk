@@ -59,7 +59,12 @@ export default function Home() {
         <meta name="description" content="Steven Gergus | Portfolio Home Page - Take a look at some of the projects I'm working on" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <div className='background-theme bg-1'>
+        <Image src={"/backblot1.svg"} width={1000} height={1000} alt="background design element" />
+      </div>
+      <div className='background-theme bg-2'>
+        <Image src={"/backblot2.svg"} width={1000} height={1000} alt="background design element" />
+      </div>
       <nav id="navbar-container" >
         <Row gap={1} align="center" css={{ marginTop: "10px", }}>
           <Col gap={1}>

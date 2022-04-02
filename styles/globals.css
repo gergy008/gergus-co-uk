@@ -18,3 +18,27 @@ a {
 footer a {
   margin-top: 12px;
 }
+
+.background-theme {
+  position: absolute;
+  opacity: 50%;
+}
+
+.bg-1 {
+  top: 0px;
+  left: 10%
+}
+
+.bg-2 {
+  top: 300px;
+  right: 10%
+}
+
+@media only screen and (max-width: 1280px) {
+  .bg-1 {
+    left: -10%
+  }
+  .bg-2 {
+    display: none;
+  }
+}
