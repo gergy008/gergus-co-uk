@@ -56,7 +56,7 @@ export default function Home() {
     <Container md>
       <Head>
         <title>Steven Gergus Portfolio</title>
-        <meta name="description" content="Portfolio for Steven Gergus | Take a look at the technologies I've trained in" />
+        <meta name="description" content="Steven Gergus | Portfolio Home Page - Take a look at some of the projects I'm working on" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
