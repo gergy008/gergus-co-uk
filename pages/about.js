@@ -12,22 +12,6 @@ export default function Home() {
   const [ currentIcon, setCurrentIcon ] = useState()
   const [ svgColor, setSVGColor ] = useState("#000")
 
-  function cardClicked(card){
-    console.log(`Card ${card} was clicked`)
-    switch (card){
-      case 1: //GergyNet
-        window.open("https://github.com/gergy008/testauth", "_blank");
-        break;
-      case 2:
-        window.open("https://hedgehog.gergy.co.uk/staff", "_blank");
-        break;
-      case 3:
-        break;
-      default:
-        console.warn(`Card ${card} was clicked, but the ID was not recognised`)
-    }
-  }
-
   function toggleTheme(){
     if(theme === "light") {
       setTheme('dark');
@@ -75,16 +59,14 @@ export default function Home() {
             <div style={{width: "100%"}}>
 
             </div>
-            <Link href="/about" passHref>
-              <Button align="center" light
-                      css={{
-                        display:"inline-block",
-                        width: "82px",
-                        minWidth: "82px"
-                      }}>
-                About me
-              </Button>
-            </Link>
+            <Button align="center" light
+                    css={{
+                      display:"inline-block",
+                      width: "82px",
+                      minWidth: "82px"
+                    }}>
+              About me
+            </Button>
             <Button align="center" light
                     css={{
                       display:"inline-block",
@@ -107,60 +89,60 @@ export default function Home() {
 
       <main className="">
         <Container css={{marginTop: "6em", marginBottom: "6em", alignItems: "flex-start"}}>
-          <Text size={72} css={{ textGradient: "45deg, $red500 -50%, $yellow500 50%", marginBottom: "20px"}} weight="bold">
-            Hello.
-          </Text>
-          <Text h3 css={{ marginTop: "20px", }}>
-            My name is Steven Gergus, I&apos;m a web developer from Manchester!
+          <Text size={64} css={{ textGradient: "45deg, $red500 -50%, $yellow500 50%", marginBottom: "20px"}} weight="bold">
+            About me.
           </Text>
         </Container>
-        <Grid.Container gap={2} css={{alignItems: "flex-start"}}>
-          <Grid xs={12}>
-            <Text h4>
-              Here&apos;s some of my projects
-            </Text>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable clickable onClick={()=>cardClicked(1)} color="primary">
-              <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
-                GergyNet Social network
-              </Text>
-              <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
-                Basic social network built in React. Click or tap to view the GitHub page
-              </Text>
-              <Image src="/gergynet-react-app-card.png" alt='Image example of my basic social network react app.' width={622} height={617}/>
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable clickable onClick={()=>cardClicked(2)} color="secondary">
-              <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
-                CRM and Booking System
-              </Text>
-              <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
-                Built using CodeIgniter framework, to practice relational data structures in MySQL. Utilises mobile first material UI design for a modern feel. 
-              </Text>
-              <Image src="/hedgehog-php-app-card.png" alt='Image example of my basic social network react app.' width={643} height={607}/>
-            </Card>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable onClick={()=>cardClicked(3)}>
-              <Text h5 weight="bold" transform="uppercase" >
-                Meta
-              </Text>
-              <Text h6>
-                ...not the Zuckerburg type...
-              </Text>
-              <hr/>
-              <Text h6>
-                This website is my latest project. Built using Next.js - Next.js allows me to rapid prototype, expedite deployment and experiment with new technologies.
-              </Text>
-              <hr/>
-              <Text h6 css={{marginBottom:"10px"}}>
-                Because everything is hosted via Vercel; I&apos;m able to commit my changes with git and have everything compiled and deployed live automatically. Pretty cool!
-              </Text>
-            </Card>
-          </Grid>
-        </Grid.Container>
+        <Container>
+          <Text h4>
+            My name is Steven Gergus, I live in Manchester and I love working with technology.
+          </Text>
+          <br/>
+          <Text h4>
+            I&apos;ve always wanted to work in web development but never really knew how to get my foot in the door. 
+            I started learning programming when I was introduced to Lua through a kids game. I used to play with
+            a very good friend of mine, I was able to pick up scripting quicker than my good friend could, so
+            ended up teaching him most of what I knew so he could go on and create his own content.
+          </Text>
+          <br/>
+          <Text h4>
+            I created my own website in secondary school for my classmates to do anything but their class-work on around 2009. 
+            It had a messageboard (inspired by 4chan) and flash-based games that my classmates could play, 
+            if they had the money for it. Flash-games required vouchers that could be purchased for access to the site.
+            This would pay for more domain names when the IT department caught up with my antics. Everything was hand made 
+            using PHP -- and HTML Tables for the website structure (that was a nightmare).
+            <br/>
+            <a href='https://web.archive.org/web/20090828042157/http://www.gergy.info/' target={"_blank"} rel="noreferrer" style={{color:"#0070F3"}}>
+              Take a look at my first ever website on archive.org
+            </a>
+          </Text>
+          <br/>
+          <Text h4>
+            I completed a software development course in college, and moved onto university completing two years of study and
+            leaving with a Diploma of Higher Education in Computer Science. From there I followed friends around to various jobs
+            while well paid; are simply not as satisfactory as being in a creative role. I decided to take on a number of projects 
+            across the years to improve my knowledge and build up a portfolio, so I can prove that I have the experience required 
+            to make beautiful, stunning websites.
+          </Text>
+          <br/>
+          <Text h4>
+            Hop, skip and jump some of the cool things I&apos;ve made in the past, to tell you I&apos;ll be updating my portfolio with 
+            more content as and when I&apos;m able to recover missing source code from various repos and flash drives lying around. 
+            I&apos;d love to show you what other things I&apos;m capable of. It includes plenty of PHP, a good side of C# and a sprinkle 
+            of Objective-C among others.
+          </Text>
+          <br/>
+          <Text h4>
+            If you&apos;d like to get in touch please <Link href={"/contact"}><a style={{color:"#0070F3"}}>contact me.</a></Link>
+          </Text>
+          <br/>
+          <Text h4>
+            Thanks for reading,
+          </Text>
+          <Text h4>
+            Steve
+          </Text>
+        </Container>
       </main>
 
       <div>
