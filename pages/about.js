@@ -1,91 +1,20 @@
-import { useEffect, useState } from 'react'
+import Nav from './components/Nav.js'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link';
 import { useTheme } from 'next-themes'
-import { Container, Card, Row, Text, Button, Col, Grid } from "@nextui-org/react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+import { Container, Text } from "@nextui-org/react";
 
 export default function Home() {
   const { theme, setTheme } = useTheme()
-  const [ currentIcon, setCurrentIcon ] = useState()
-  const [ svgColor, setSVGColor ] = useState("#000")
-
-  function toggleTheme(){
-    if(theme === "light") {
-      setTheme('dark');
-      setCurrentIcon(faMoon);
-    }
-    else {
-      setTheme('light');
-      setCurrentIcon(faSun);
-    }
-  }
-
-  useEffect(() => {
-    function checkIcon(){
-      if(theme === "dark") {
-        setCurrentIcon(faMoon);
-        setSVGColor("#FFF")
-      } else {
-        setCurrentIcon(faSun);
-        setSVGColor("#000")
-      }
-    }
-    checkIcon();
-  }, [theme, setCurrentIcon]);
 
   return (
     <Container md>
       <Head>
         <title>Steven Gergus Portfolio</title>
-        <meta name="description" content="Steven Gergus | Portfolio Home Page - Take a look at some of the projects I'm working on" />
+        <meta name="description" content="Steven Gergus | Portfolio About Me - Learn more about me" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <nav id="navbar-container" >
-        <Row gap={1} align="center" css={{ marginTop: "10px", }}>
-          <Col gap={1}>
-            <Link href="/">
-              <a>
-                <Text h4 size={24}>
-                  Gergus.co.uk
-                </Text>
-              </a>
-            </Link>
-          </Col>
-          <Col gap={1} justify="flex-end" width="100%" css={{display:"flex", marginLeft: "auto", marginRight: "0px"}}>
-            <div style={{width: "100%"}}>
-
-            </div>
-            <Button align="center" light
-                    css={{
-                      display:"inline-block",
-                      width: "82px",
-                      minWidth: "82px"
-                    }}>
-              About me
-            </Button>
-            <Button align="center" light
-                    css={{
-                      display:"inline-block",
-                      width: "82px",
-                      minWidth: "82px"
-                    }}>
-              Contact
-            </Button>
-            <Button color={currentIcon===faSun?"Gray200":"Gray900"} onClick={toggleTheme} align="center"
-                    css={{
-                      display:"inline-block",
-                      width: "46px",
-                      minWidth: "46px"
-                    }}>
-              <FontAwesomeIcon icon={currentIcon} />
-            </Button>
-          </Col>
-        </Row>
-      </nav>
+      <Nav theme={theme} setTheme={setTheme}  /> 
 
       <main className="">
         <Container css={{marginTop: "6em", marginBottom: "6em", alignItems: "flex-start"}}>
@@ -94,52 +23,78 @@ export default function Home() {
           </Text>
         </Container>
         <Container>
-          <Text h4>
+          <Text h3>
             My name is Steven Gergus, I live in Manchester and I love working with technology.
           </Text>
           <br/>
-          <Text h4>
-            I&apos;ve always wanted to work in web development but never really knew how to get my foot in the door. 
-            I started learning programming when I was introduced to Lua through a kids game. I used to play with
-            a very good friend of mine, I was able to pick up scripting quicker than my good friend could, so
-            ended up teaching him most of what I knew so he could go on and create his own content.
+          <Text size={22}>
+            I&apos;ve always wanted to work in software development but never really knew how to get my foot in the door. Since a teen
+            I&apos;ve become to love problem solving and creating tangible things for myself and others to enjoy. My motivation for finally 
+            entering software development is to start do something I love doing; so I can work to live, and not live to work. 
+            From the people that know me the best, I&apos;m hearing more each day the same phrase:
           </Text>
           <br/>
-          <Text h4>
+          <Text h4 size={22} css={{ textGradient: "45deg, $red500 -10%, $yellow500 50%",}}>
+            <i><q>Why are you here? Why don&apos;t you work in IT?</q></i>
+          </Text>
+          <br/>
+          <Text size={22}>
+          I decided to take on a number of projects across the years
+            to improve my knowledge and build up a portfolio, so I can prove that I have the skills required to create beautiful websites and functional software.
+          </Text>
+          <br/>
+          <Text h3>
+            How did it all start?
+          </Text>
+          <br/>
+          <Text size={22}>
+            I started learning programming when I was introduced to <a href='https://www.lua.org/' target={"_blank"} rel="noreferrer" style={{color:"#0070F3"}}>Lua</a>&nbsp;through 
+            a game as a kid. I was able to pick up scripting easier than my good friend I used to play these game with, 
+            so ended up teaching him most of what I knew so he could go on and create his own content &amp; games. I began to
+            love figuring out the little solutions to a bigger problem and seeing it come to life in front of me.
+          </Text>
+          <br/>
+          <Text size={22}>
             I created my own website in secondary school for my classmates to do anything but their class-work on around 2009. 
-            It had a messageboard (inspired by 4chan) and flash-based games that my classmates could play, 
-            if they had the money for it. Flash-games required vouchers that could be purchased for access to the site.
-            This would pay for more domain names when the IT department caught up with my antics. Everything was hand made 
-            using PHP -- and HTML Tables for the website structure (that was a nightmare).
+            It had a messageboard (inspired by 4chan) and flash-based games that my classmates could play <small>(if they had the money for it)</small>. 
+            My classmates were able to buy vouchers which they could redeem for access to certain games the site.
+            This would pay for more domain names (.info domains were 99p a year!) when the IT department filtered a domain after catching up with my antics. 
+            Everything was hand made using PHP. From authentication, transactions and rendering out printable vouchers.
             <br/>
             <a href='https://web.archive.org/web/20090828042157/http://www.gergy.info/' target={"_blank"} rel="noreferrer" style={{color:"#0070F3"}}>
-              Take a look at my first ever website on archive.org
+              Take a small look at the remains of my first ever website on archive.org
             </a>
           </Text>
           <br/>
-          <Text h4>
-            I completed a software development course in college, and moved onto university completing two years of study and
-            leaving with a Diploma of Higher Education in Computer Science. From there I followed friends around to various jobs
-            while well paid; are simply not as satisfactory as being in a creative role. I decided to take on a number of projects 
-            across the years to improve my knowledge and build up a portfolio, so I can prove that I have the experience required 
-            to make beautiful, stunning websites.
+          <Text size={22}>
+            I completed a Level 3 Software Development course in college achieving a DDM. 
+            My favourite assigment was a Cocos2D-x based iOS platformer game, of which the protagonist was my friend and classmate (who hates the sun),
+            the character proceeds along a sunny beach in a dark hoodie collecting monster cans and avoiding sunlight, complete with sound effects, health and
+            a theme song which I composed myself on garageband. 
           </Text>
           <br/>
-          <Text h4>
-            Hop, skip and jump some of the cool things I&apos;ve made in the past, to tell you I&apos;ll be updating my portfolio with 
-            more content as and when I&apos;m able to recover missing source code from various repos and flash drives lying around. 
+          <Text size={22}>
+            After college I moved onto university completing two years of study and leaving with a Diploma of Higher Education in Computer Science. 
+            I picked up a number of skills, from algorithms and data structures, to data engineering with Oracle databases. I was late to the game on
+            securing a placement, which restricted my options upon leaving university. I&apos;ve followed friends around to various comfortably-paid roles,
+            however they simply do not fulfil my life goals or satisfy my creative desire. 
+          </Text>
+          <br/>
+          <Text size={22}>
+            Hop, skip and jump some of the cool things I&apos;ve made in the past, to let you know I&apos;ll be updating my portfolio with 
+            more content as and when I&apos;m able to find and put together everything in a format for web. 
             I&apos;d love to show you what other things I&apos;m capable of. It includes plenty of PHP, a good side of C# and a sprinkle 
             of Objective-C among others.
           </Text>
           <br/>
-          <Text h4>
+          <Text size={22}>
             If you&apos;d like to get in touch please <Link href={"/contact"}><a style={{color:"#0070F3"}}>contact me.</a></Link>
           </Text>
           <br/>
-          <Text h4>
-            Thanks for reading,
+          <Text size={22}>
+            Thanks for reading!
           </Text>
-          <Text h4>
+          <Text size={22}>
             Steve
           </Text>
         </Container>

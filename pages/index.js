@@ -1,16 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import Nav from './components/Nav.js'
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link';
 import { useTheme } from 'next-themes'
-import { Container, Card, Row, Text, Button, Col, Grid } from "@nextui-org/react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons'
+import { Container, Card, Text, Grid } from "@nextui-org/react";
 
 export default function Home() {
   const { theme, setTheme } = useTheme()
-  const [ currentIcon, setCurrentIcon ] = useState()
-  const [ svgColor, setSVGColor ] = useState("#000")
+  //const [ svgColor, setSVGColor ] = useState("#000")
 
   function cardClicked(card){
     console.log(`Card ${card} was clicked`)
@@ -28,30 +25,6 @@ export default function Home() {
     }
   }
 
-  function toggleTheme(){
-    if(theme === "light") {
-      setTheme('dark');
-      setCurrentIcon(faMoon);
-    }
-    else {
-      setTheme('light');
-      setCurrentIcon(faSun);
-    }
-  }
-
-  useEffect(() => {
-    function checkIcon(){
-      if(theme === "dark") {
-        setCurrentIcon(faMoon);
-        setSVGColor("#FFF")
-      } else {
-        setCurrentIcon(faSun);
-        setSVGColor("#000")
-      }
-    }
-    checkIcon();
-  }, [theme, setCurrentIcon]);
-
   return (
     <Container md>
       <Head>
@@ -65,50 +38,8 @@ export default function Home() {
       <div className='background-theme bg-2'>
         <Image src={"/backblot2.svg"} width={1000} height={1000} alt="background design element" />
       </div>
-      <nav id="navbar-container" >
-        <Row gap={1} align="center" css={{ marginTop: "10px", }}>
-          <Col gap={1}>
-            <Link href="/">
-              <a>
-                <Text h4 size={24}>
-                  Gergus.co.uk
-                </Text>
-              </a>
-            </Link>
-          </Col>
-          <Col gap={1} justify="flex-end" width="100%" css={{display:"flex", marginLeft: "auto", marginRight: "0px"}}>
-            <div style={{width: "100%"}}>
-
-            </div>
-            <Link href="/about" passHref>
-              <Button align="center" light
-                      css={{
-                        display:"inline-block",
-                        width: "82px",
-                        minWidth: "82px"
-                      }}>
-                About me
-              </Button>
-            </Link>
-            <Button align="center" light
-                    css={{
-                      display:"inline-block",
-                      width: "82px",
-                      minWidth: "82px"
-                    }}>
-              Contact
-            </Button>
-            <Button color={currentIcon===faSun?"Gray200":"Gray900"} onClick={toggleTheme} align="center"
-                    css={{
-                      display:"inline-block",
-                      width: "46px",
-                      minWidth: "46px"
-                    }}>
-              <FontAwesomeIcon icon={currentIcon} />
-            </Button>
-          </Col>
-        </Row>
-      </nav>
+      {/* setSVGColor={setSVGColor} */}
+      <Nav theme={theme} setTheme={setTheme}  /> 
 
       <main className="">
         <Container css={{marginTop: "6em", marginBottom: "6em", alignItems: "flex-start"}}>
@@ -116,7 +47,7 @@ export default function Home() {
             Hello.
           </Text>
           <Text h3 css={{ marginTop: "20px", }}>
-            My name is Steven Gergus, I&apos;m a web developer from Manchester!
+            My name is Steven Gergus, I&apos;m a software developer from Greater Manchester, UK!
           </Text>
         </Container>
         <Grid.Container gap={2} css={{alignItems: "flex-start"}}>
