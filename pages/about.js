@@ -1,4 +1,5 @@
 import Nav from './components/Nav.js'
+import Footer from './components/Footer.js'
 import Head from 'next/head'
 import Link from 'next/link';
 import { useTheme } from 'next-themes'
@@ -100,13 +101,7 @@ export default function Home() {
         </Container>
       </main>
 
-      <div>
-        &nbsp;
-      </div>
-
-      <footer justify="center" align="center">
-        <p>© 2022 Steven Gergus</p>
-      </footer>
+      <Footer />
     </Container>
   )
 }

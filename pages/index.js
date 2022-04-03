@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Nav from './components/Nav.js'
+import Footer from './components/Footer.js'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useTheme } from 'next-themes'
@@ -99,13 +100,7 @@ export default function Home() {
         </Grid.Container>
       </main>
 
-      <div>
-        &nbsp;
-      </div>
-
-      <footer justify="center" align="center">
-        <p>© 2022 Steven Gergus</p>
-      </footer>
+      <Footer />
     </Container>
   )
 }
