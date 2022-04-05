@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useTheme } from 'next-themes'
 import { Container, Text } from "@nextui-org/react";
 
-export default function Home() {
+export default function About() {
   const { theme, setTheme } = useTheme()
 
   return (

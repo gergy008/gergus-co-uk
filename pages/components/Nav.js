@@ -57,14 +57,16 @@ export default function Nav({ theme, setTheme }) {
                 About me
                 </Button>
             </Link>
-            <Button align="center" light
-                    css={{
-                        display:"inline-block",
-                        width: "82px",
-                        minWidth: "82px"
-                    }}>
-                Contact
-            </Button>
+            <Link href="/contact" passHref>
+                <Button align="center" light
+                        css={{
+                            display:"inline-block",
+                            width: "82px",
+                            minWidth: "82px"
+                        }}>
+                    Contact
+                </Button>
+            </Link>
             <Tooltip
                 color="invert"
                 content={theme=="light"?"Dark mode":"Light mode"}
