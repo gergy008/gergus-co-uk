@@ -24,7 +24,7 @@ export default function handler(req, res) {
         "Content-Type": "application/json",
       },
     }).then((response) => {
-      if (response.ok) {
+      if (response.ok) { 
         // If the response is ok then show the email returned
         console.log("Token validated successfully");
 
