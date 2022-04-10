@@ -73,7 +73,7 @@ export default function Contact() {
   }, [token]);
 */
 
-  console.log(process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY)
+  //console.log(process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY)
 
   return (
     <Container md>
