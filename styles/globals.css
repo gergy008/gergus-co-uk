@@ -16,6 +16,10 @@ a {
   box-sizing: border-box;
 }
 
+hr {
+  width: 80%;
+}
+
 footer a {
   margin-top: 12px;
 }

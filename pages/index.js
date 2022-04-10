@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useTheme } from 'next-themes'
 import { Container, Card, Text, Grid } from "@nextui-org/react";
 
-export default function Home() {
+export default function Index() {
   const { theme, setTheme } = useTheme()
   //const [ svgColor, setSVGColor ] = useState("#000")
 
@@ -20,6 +20,9 @@ export default function Home() {
         window.open("https://hedgehog.gergy.co.uk/staff", "_blank");
         break;
       case 3:
+        break;
+      case 4:
+        window.open("/flagboard", "_self");
         break;
       default:
         console.warn(`Card ${card} was clicked, but the ID was not recognised`)
@@ -62,10 +65,12 @@ export default function Home() {
               <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
                 GergyNet Social network
               </Text>
+              <br/>
               <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
                 Basic social network built in React. Click or tap to view the GitHub page
               </Text>
-              <Image src="/gergynet-react-app-card.png" alt='Image example of my basic social network react app.' width={622} height={617}/>
+              <br />
+              <Image showSkeleton src="/gergynet-react-app-card.png" alt='Image example of my basic social network react app.' width={622} height={617} objectFit="scale-down"/>
             </Card>
           </Grid>
           <Grid xs={12} sm={4}>
@@ -73,10 +78,25 @@ export default function Home() {
               <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
                 CRM and Booking System
               </Text>
+              <br/>
               <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
                 Built using CodeIgniter framework, to practice relational data structures in MySQL. Utilises mobile first material UI design for a modern feel. 
               </Text>
-              <Image src="/hedgehog-php-app-card.png" alt='Image example of my basic social network react app.' width={643} height={607}/>
+              <br/>
+              <Image showSkeleton src="/hedgehog-php-app-card.png" alt='Image example of my basic social network react app.' width={643} height={607} objectFit="scale-down"/>
+            </Card>
+          </Grid>
+          <Grid xs={12} sm={4}>
+            <Card hoverable onClick={()=>cardClicked(4)} color="default">
+              <Text h5 weight="bold" transform="uppercase" >
+                Flagboard Application
+              </Text>
+              <br/>
+              <Text h6>
+                Custom C# Solution used at Daytona Motorsport Trafford (Now TeamSport) that made my job much simpler &amp; replaced <i>a lot</i> of paper.
+              </Text>
+              <br/>
+              <Image showSkeleton src="/flagboard-cs-example-card.png" alt='Image example of the flagboard C# app' width={571} height={525} objectFit="scale-down"/>
             </Card>
           </Grid>
           <Grid xs={12} sm={4}>
@@ -87,11 +107,11 @@ export default function Home() {
               <Text h6>
                 ...not the Zuckerburg type...
               </Text>
-              <hr/>
+              <br/>
               <Text h6>
                 This website is my latest project. Built using Next.js - Next.js allows me to rapid prototype, expedite deployment and experiment with new technologies.
               </Text>
-              <hr/>
+              <br/>
               <Text h6 css={{marginBottom:"10px"}}>
                 Because everything is hosted via Vercel; I&apos;m able to commit my changes with git and have everything compiled and deployed live automatically. Pretty cool!
               </Text>
