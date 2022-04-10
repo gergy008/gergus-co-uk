@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import Nav from './components/Nav.js'
 import Footer from './components/Footer.js'
 import Head from 'next/head'
@@ -11,13 +11,6 @@ export default function Contact() {
   const [token, setToken] = useState(null);
   const [email, setEmail] = useState("");
   const captchaRef = useRef(null);
-
-  function openEmail(){
-    var name = "steven"
-    window.open(`mailto:${name}`+`@gergus.co.uk`)
-  }
-
-  var errors = []
 
   function onLoad (e) {
     console.log("hCapcha Loaded")
@@ -56,7 +49,7 @@ export default function Contact() {
   }
 
   function onSubmit (e) {
-    console.log("On submit")
+    //console.log("On submit")
     e.preventDefault();
 
     // this reaches out to the hCaptcha JS API and runs the
@@ -64,20 +57,21 @@ export default function Contact() {
     // documented here:
     // https://docs.hcaptcha.com/configuration#jsapi
     if (token) {
-      console.log("Token set already, verifying...")
+      //console.log("Token set already, verifying...")
       onCaptchaChange();
     } else {
-      console.log("No token, forcing challenge...")
+      //console.log("No token, forcing challenge...")
       captchaRef.current.execute();
     }
   };
-
+/*
   useEffect(() => {
 
     if (token)
       console.log(`hCaptcha Token: ${token}`);
 
   }, [token]);
+*/
 
   console.log(process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY)
 
