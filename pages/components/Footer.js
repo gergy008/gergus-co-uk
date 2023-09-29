@@ -6,8 +6,12 @@ export default function Footer() {
         <div>
           &nbsp;
         </div>
-        <footer justify="center" style="text-align:center;">
-            <p>© 2022 Steven Gergus. <a href="https://github.com/gergy008/gergus-co-uk" target={"_blank"} rel="noreferrer">Source open and freely available under licence.</a></p>
+        <footer style={{
+                display: "flex",
+                textAlign: "center",
+                justifyContent: "center",
+                }}>
+            <p>Copyleft (ɔ) 2023 Steven Gergus. <a href="https://github.com/gergy008/gergus-co-uk" target={"_blank"} rel="noreferrer">Source code freely available under licence.</a></p>
         </footer>
     </>
   )

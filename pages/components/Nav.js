@@ -72,7 +72,10 @@ export default function Nav({ theme, setTheme }) {
                 content={theme=="light"?"Dark mode":"Light mode"}
                 placement="bottomEnd"
             >
-                <Button color={currentIcon===faSun?"Gray200":"Gray900"} onClick={toggleTheme} align="center"
+                <Button color={currentIcon===faSun?"Gray200":"Gray900"} 
+                        onClick={toggleTheme} 
+                        align="center" 
+                        title={currentIcon===faSun?"Toggle Dark Mode":"Toggle Light Mode"} 
                         css={{
                         display:"inline-block",
                         width: "46px",
