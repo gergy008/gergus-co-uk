@@ -67,13 +67,13 @@ export default function About() {
             <Text size={22}>
               Change started in July 2022, in a completely conincidental conversation between a family member and their collegue (a recruiter).
               <br />
-              &quot;He's not happy where he is...&quot;
+              &quot;He&apos;s not happy where he is...&quot;
               <br />
               &quot;Is he any good with computers?&quot;
               <br />
-              I'd worked in my current role for 3 years at this time. I had plans to progress, my company however did not. 
+              I&apos;d worked in my current role for 3 years at this time. I had plans to progress, my company however did not. 
               I was struggling and blamed myself. I was at my lowest point when this dilemma came up. I have bills to pay,
-              I'm struggling to do well here, what makes me think I'll do well elsewhere? Why can't I just care less which is 
+              I&apos;m struggling to do well here, what makes me think I&apos;ll do well elsewhere? Why can&apos;t I just care less which is 
               essential to better perfomance? Family work here - Will I let them down?
             </Text>
             <br />
@@ -90,9 +90,9 @@ export default function About() {
             </Text>
             <br />
             <Text size={22}>
-              I'm so lucky to work here. Sherwin is excellent at understanding diversity and differences in people. In my experience, 
+              I&apos;m so lucky to work here. Sherwin is excellent at understanding diversity and differences in people. In my experience, 
               Sherwin creates a culture where <i>equity</i> over <i>equality</i> is clearly understood and demonstrated.<br />
-              I used work extra hours because I had to, now it's because I love what I do.
+              I used work extra hours because I had to, now it&apos;s because I love what I do.
             </Text>
             <br />
             <Text h3>How did it all start?</Text>
