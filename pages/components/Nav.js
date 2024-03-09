@@ -36,11 +36,9 @@ export default function Nav({ theme, setTheme }) {
         <Row gap={1} align="center" css={{ marginTop: "10px", }}>
             <Col gap={1}>
             <Link href="/">
-                <a>
                 <Text h4 size={24}>
                     Gergus.co.uk
                 </Text>
-                </a>
             </Link>
             </Col>
             <Col gap={1} justify="flex-end" width="100%" css={{display:"flex", marginLeft: "auto", marginRight: "0px"}}>

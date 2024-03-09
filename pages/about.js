@@ -178,9 +178,7 @@ export default function About() {
             <br />
             <Text size={22}>
               If you&apos;d like to get in touch please{" "}
-              <Link href={"/contact"}>
-                <a style={{ color: "#0070F3" }}>contact me.</a>
-              </Link>
+              <Link href={"/contact"} style={{ color: "#0070F3" }}>contact me.</Link>
             </Text>
             <br />
             <Text size={22}>Thanks for reading!</Text>
