@@ -125,7 +125,7 @@ export default function Home() {
               - linear-gradient(45deg, #ef4444 -50%, #eab308 50%): 45-degree diagonal gradient
               - Red (#ef4444) to Yellow (#eab308) with custom color stops
             */}
-            <h1 className="text-5xl font-black mb-4 gradient-red-yellow">
+            <h1 className="text-5xl font-extrabold mb-4 gradient-red-yellow">
               Hello.
             </h1>
             {/* text-default-500: HeroUI's default secondary text color */}
