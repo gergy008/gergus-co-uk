@@ -1,16 +1,15 @@
-import React, { useState, useRef } from 'react'
-import Nav from './components/Nav.js'
-import Footer from './components/Footer.js'
+import React, { useState } from 'react'
+import Nav from '../components/Nav.js'
+import Footer from '../components/Footer.js'
 import Head from 'next/head'
-import { Textarea } from "@nextui-org/react";
 import { useTheme } from 'next-themes'
-import { Button, Container, Text, } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 
-export default function Contact() {
+export default function Ebay() {
   const { theme, setTheme } = useTheme()
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState("");
+  const [copied, setCopied] = useState(false);
 
   async function getNewDescription(text){
     try {
@@ -31,8 +30,9 @@ export default function Contact() {
       } else {
         // Else throw an error with the message returned
         // from the API
-        setError(await response.json());
-        throw new Error(error.message)
+        const errorData = await response.json();
+        setError(errorData.message || "Something went wrong");
+        throw new Error(errorData.message || "Something went wrong")
       }
     } catch (error) {
       console.error(error?.message || "Something went wrong");
@@ -50,11 +50,15 @@ export default function Contact() {
   };
 
   function copyText(entryText){
-    navigator.clipboard.writeText(entryText);
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(entryText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   }
 
   return (
-    <Container md>
+    <div className="max-w-4xl mx-auto px-4">
       <Head>
         <title>Steven Gergus Portfolio</title>
         <meta name="description" content="Steven Gergus | eBay Listing Description Generator" />
@@ -63,51 +67,58 @@ export default function Contact() {
       <Nav theme={theme} setTheme={setTheme}  /> 
 
       <main className="">
-        <Container css={{marginTop: "6em", marginBottom: "4em", alignItems: "flex-start"}}>
-          <Text size={64} css={{ textGradient: "45deg, $red500 -50%, $yellow500 50%"}} weight="bold">
+        <div className="mt-24 mb-16 flex flex-col items-start">
+          <h1 
+            className="text-4xl font-bold mb-5"
+            style={{
+              background: "linear-gradient(45deg, #ef4444 -50%, #eab308 50%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
             Store Description Generator.
-          </Text>
-        </Container>
-        <Container css={{marginBottom: "20px",}}>
-          <Text h4>
+          </h1>
+        </div>
+        <div className="mb-5">
+          <h4 className="text-lg font-semibold mb-2">
             Enter your item description below.
-          </Text>
-        </Container>
-        <Container css={{marginBottom: "20px", width: "100%",}}>
+          </h4>
+        </div>
+        <div className="mb-5 w-full">
           <form onSubmit={onSubmit}>
-            <Textarea
-              css={{marginBottom: "20px",}}
+            <textarea
               name='desc'
-              label="Description"
-              labelplacement="outside"
-              placeholder=""
+              placeholder="Enter your item description..."
               defaultValue=""
-              className=""
-              fullWidth={true}
-              minRows={4}
-              maxRows={12}
+              className="w-full p-3 border border-gray-300 rounded-md mb-5"
+              style={{minHeight: "100px"}}
+              rows={4}
             />
-            <Button color={"primary"} type="submit">Generate</Button>
+            <Button color="primary" type="submit">Generate</Button>
           </form>
-        </Container>
-        <Container css={{marginBottom: "20px", width: "100%",}}>
-          {error?<Text color='error'>Error: {error}</Text>:""}
-          {result?<Textarea css={{marginBottom: "20px",}}
-            isDisabled
+        </div>
+        <div className="mb-5 w-full">
+          {error?<p className="text-red-500">Error: {typeof error === 'string' ? error : error.message || 'Unknown error'}</p>:""}
+          {result?<textarea
+            disabled
             name='resultvalue'
-            label={<Button color={"success"} onClick={() => copyText(result)}>{copied?"Copied!":"Copy"}</Button>}
-            labelplacement="outside"
             value={result}
-            className=""
-            fullWidth={true}
-            minRows={4}
-            maxRows={12}
+            className="w-full p-3 border border-gray-300 rounded-md mb-5 bg-gray-100"
+            style={{minHeight: "100px"}}
+            rows={4}
+            readOnly
           />:""}
+          {result && (
+            <Button color="primary" onPress={() => copyText(result)} className="mt-2">
+              {copied ? "Copied!" : "Copy"}
+            </Button>
+          )}
           
-        </Container>
+        </div>
       </main>
 
       <Footer />
-    </Container>
+    </div>
   )
 }

@@ -1,165 +1,267 @@
-import { useState } from 'react'
-import Nav from './components/Nav.js'
-import Footer from './components/Footer.js'
-import Head from 'next/head'
-import Image from 'next/image'
+// ============================================================================
+// IMPORTS
+// ============================================================================
+
+// React hooks for managing component state and side effects
+import { useState, useEffect } from 'react'
+
+// HeroUI v3 Components:
+// - Card: Container component for displaying content in a card layout
+// - CardHeader: Section at the top of a card (typically for titles)
+// - CardContent: Main body section of a card (replaces CardBody from v2)
+// - Button: Interactive button component with built-in styling and variants
+import { Card, CardContent, CardHeader, Button } from "@heroui/react"
+
+// next-themes: Manages dark/light theme switching
+// - useTheme: Hook that provides current theme and setTheme function
 import { useTheme } from 'next-themes'
-import { Container, Card, Text, Grid } from "@nextui-org/react";
 
-export default function Index() {
+// Next.js Head component for managing page metadata (title, meta tags, etc.)
+import Head from 'next/head'
+
+// Next.js Image component for optimized images
+import Image from 'next/image'
+
+// Custom navigation component
+import Nav from '../components/Nav'
+
+// ============================================================================
+// COMPONENT: Home Page
+// ============================================================================
+export default function Home() {
+  // ==========================================================================
+  // THEME MANAGEMENT
+  // ==========================================================================
+  // useTheme hook from next-themes provides:
+  // - theme: Current theme ('light', 'dark', or 'system')
+  // - setTheme: Function to change the theme
   const { theme, setTheme } = useTheme()
-  //const [ svgColor, setSVGColor ] = useState("#000")
+  
+  // ==========================================================================
+  // HYDRATION SAFETY
+  // ==========================================================================
+  // mounted state prevents hydration errors:
+  // - During server-side rendering, theme is undefined
+  // - On client, theme becomes available after hydration
+  // - We only show theme-dependent content after component mounts
+  const [mounted, setMounted] = useState(false)
 
-  function cardClicked(card){
-    console.log(`Card ${card} was clicked`)
-    switch (card){
-      case 1: //GergyNet
-        window.open("https://github.com/gergy008/testauth", "_blank");
-        break;
-      case 2:
-        window.open("https://hedgehog.gergy.co.uk/staff", "_blank");
-        break;
-      case 3:
-        break;
-      case 4:
-        window.open("/flagboard", "_self");
-        break;
-      default:
-        console.warn(`Card ${card} was clicked, but the ID was not recognised`)
-    }
-  }
+  // ==========================================================================
+  // OG IMAGE STATE
+  // ==========================================================================
+  // State to store the dynamically fetched OG image URL from IsThereADropToday.com
+  const [ogImageUrl, setOgImageUrl] = useState('https://isthereadroptoday.com/api/og/No.')
 
+  // Mark component as mounted on client-side only
+  // This ensures theme-dependent content doesn't cause hydration mismatches
+  useEffect(() => {
+    setMounted(true)
+    
+    // Fetch the OG image URL from our API route
+    fetch('/api/og-image')
+      .then(res => res.json())
+      .then(data => {
+        if (data.ogImageUrl) {
+          setOgImageUrl(data.ogImageUrl)
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching OG image URL:', error)
+        // Keep the fallback URL if fetch fails
+      })
+  }, [])
+
+  // ==========================================================================
+  // RENDER
+  // ==========================================================================
   return (
-    <Container md>
+    <>
+      {/* Page metadata - appears in browser tab and search results */}
       <Head>
-        <title>Steven Gergus Portfolio</title>
-        <meta name="description" content="Steven Gergus | Portfolio Home Page - Take a look at some of the projects I'm working on" />
+        <title>HeroUI Next.js App</title>
+        <meta name="description" content="A fresh HeroUI boilerplate" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className='background-theme bg-1'>
-        <Image src={"/backblot1.svg"} width={1000} height={1000} alt="background design element" />
-      </div>
-      <div className='background-theme bg-2'>
-        <Image src={"/backblot2.svg"} width={1000} height={1000} alt="background design element" />
-      </div>
-      {/* setSVGColor={setSVGColor} */}
-      <Nav theme={theme} setTheme={setTheme}  /> 
 
-      <main className="">
-        <Container css={{marginTop: "6em", marginBottom: "6em", alignItems: "flex-start"}}>
-          <Text size={72} css={{ textGradient: "45deg, $red500 -50%, $yellow500 50%", marginBottom: "20px"}} weight="bold">
-            Hello.
-          </Text>
-          <Text h3 css={{ marginTop: "20px", }}>
-            My name is Steven Gergus, I&apos;m a software developer from Greater Manchester, UK!
-          </Text>
-        </Container>
-        <Grid.Container gap={2} css={{alignItems: "flex-start"}}>
-          <Grid xs={12}>
-            <Text h4>
-              Here&apos;s some of my projects
-            </Text>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable clickable onClick={()=>cardClicked(1)} color="primary">
-              <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
-                GergyNet Social network
-              </Text>
-              <br/>
-              <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
-                Basic social network built in React. Click or tap to view the GitHub page
-              </Text>
-              <br />
-              <Image src="/gergynet-react-app-card.png" alt='Image example of my basic social network react app.' width={622} height={300} style={{objectFit: 'scale-down'}}/>
+      {/* Navigation bar component */}
+      <Nav />
+
+      {/* Background SVG elements - positioned mostly centered, veering slightly left and right */}
+      {/* Moved outside main to ensure fixed sizing independent of page content */}
+      {/* Fixed pixel sizes prevent shrinking when viewport changes */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Left background SVG - centered with slight left offset, animated */}
+        {/* Nested structure: outer div handles rotation, inner handles breathing */}
+        <div className="absolute left-1/2 top-1/2 animate-float-1">
+          <img 
+            src="/backblot1.svg" 
+            alt="" 
+            className="opacity-50 dark:opacity-40 animate-breathe-1"
+            style={{ width: '800px', height: 'auto' }}
+          />
+        </div>
+        {/* Right background SVG - centered with slight right offset, animated */}
+        {/* Nested structure: outer div handles rotation, inner handles breathing */}
+        <div className="absolute left-1/2 top-1/2 animate-float-2">
+          <img 
+            src="/backblot2.svg" 
+            alt="" 
+            className="opacity-50 dark:opacity-40 animate-breathe-2"
+            style={{ width: '800px', height: 'auto' }}
+          />
+        </div>
+      </div>
+
+      {/* Main page content */}
+      <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 pt-24 relative">
+        {/* Container with responsive width: 100% on mobile, 70% on desktop */}
+        <div className="w-full container-70 mx-auto relative z-10">
+          
+          {/* Page header section */}
+          <div className="mb-16 px-10">
+            {/* 
+              H1 with red-to-yellow gradient text:
+              - gradient-red-yellow: Custom CSS class with exact gradient from previous site
+              - linear-gradient(45deg, #ef4444 -50%, #eab308 50%): 45-degree diagonal gradient
+              - Red (#ef4444) to Yellow (#eab308) with custom color stops
+            */}
+            <h1 className="text-5xl font-black mb-4 gradient-red-yellow">
+              Hello.
+            </h1>
+            {/* text-default-500: HeroUI's default secondary text color */}
+            <p className="text-lg font-semibold text-default-500">
+              I'm Steven Gergus, a software developer from Greater Manchester, UK.
+            </p>
+          </div>
+          {/* text-default-500: HeroUI's default secondary text color */}
+          <p className="text-lg text-default-500 mb-8">
+            Here are some of my projects:
+          </p>
+
+          {/* Card grid: 1 column on mobile, 2 columns on medium+ screens */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            
+            {/* ==============================================================
+                CARD EXAMPLE 1: Basic Card Structure
+                ==============================================================
+                HeroUI Card components:
+                - Card: Main container (automatically styled with HeroUI theme)
+                - CardHeader: Top section for titles/headers
+                - CardContent: Main body section for content
+            */}
+            <Card className="bg-orange-800/60">
+              <Card.Header>
+                <Card.Title className="text-lg font-semibold">
+                  This website
+                </Card.Title>
+              </Card.Header>
+              <Card.Content>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  My personal website, built with Next.js, HeroUI and Tailwind CSS.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  I'm experimenting with new technologies, rapidly prototyping new ideas, and building up a portfolio of my work.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  My website is hosted on Vercel, and the source code is freely available on GitHub.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  Check the page footer for a link to the source code on GitHub.
+                </p>
+              </Card.Content>
             </Card>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable clickable onClick={()=>cardClicked(2)} color="secondary">
-              <Text h5 weight="bold" transform="uppercase" color='#DDDDDDFF'>
-                CRM and Booking System
-              </Text>
-              <br/>
-              <Text h6 css={{marginBottom:"10px"}} color='#DDDDDDFF'>
-                Built using CodeIgniter framework, to practice relational data structures in MySQL. Utilises mobile first material UI design for a modern feel. 
-              </Text>
-              <br/>
-              <Image src="/hedgehog-php-app-card.png" alt='Image example of my basic social network react app.' width={643} height={300} style={{objectFit: 'scale-down'}}/>
+            
+
+            {/* ==============================================================
+                CARD EXAMPLE 2: Basic Card Structure
+                ==============================================================
+            */}
+            <Card className="bg-cyan-800/60">
+              <Card.Header>
+                <Card.Title className="text-lg">
+                  IsThereADropToday.com
+                </Card.Title>
+              </Card.Header>
+              <Card.Content>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  The Pokémon company is notorious for dropping new TCG sets and restocks randomly 
+                  and unpredictably; I created IsThereADropToday.com to aggregate information and 
+                  attempt to predict drops.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  Therefore, <b>IsThereADropToday.com</b> is a small passion project of mine
+                </p>
+                <p className="text-sm text-default-500 text-left">
+                  Here's the current prediction:
+                </p>
+                {/* OG image from IsThereADropToday.com - dynamically fetched and clickable */}
+                <div className="mb-4 rounded-lg overflow-hidden">
+                  <a 
+                    href="https://isthereadroptoday.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="block cursor-pointer hover:opacity-90 transition-opacity"
+                  >
+                    <Image 
+                      src={ogImageUrl}
+                      alt="IsThereADropToday.com preview"
+                      width={1200}
+                      height={630}
+                      className="w-full h-auto"
+                      unoptimized
+                    />
+                  </a>
+                </div>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  It's not really that accurate, but it's a fun project to work on. I hope to 
+                  develop smarter algorithms and predictions as time goes on.
+                </p>
+              </Card.Content>
             </Card>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable onClick={()=>cardClicked(4)} color="default">
-              <Text h5 weight="bold" transform="uppercase" >
-                Flagboard Application
-              </Text>
-              <br/>
-              <Text h6>
-                Custom C# Solution used at Daytona Motorsport Trafford (Now TeamSport) that made my job much simpler &amp; replaced <i>a lot</i> of paper.
-              </Text>
-              <br/>
-              <Image src="/flagboard-cs-example-card.png" alt='Image example of the flagboard C# app' width={571} height={300} style={{objectFit: 'scale-down'}}/>
+            
+            {/* ==============================================================
+                CARD EXAMPLE 3: Basic Card Structure
+                ==============================================================
+                HeroUI Card components:
+                - Card: Main container (automatically styled with HeroUI theme)
+                - CardHeader: Top section for titles/headers
+                - CardContent: Main body section for content
+            */}
+            <Card className="bg-green-800/60">
+              <Card.Header>
+                <Card.Title className="text-lg font-semibold">
+                  Barcodes & scanners
+                </Card.Title>
+              </Card.Header>
+              <Card.Content>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  Work got me strangely interested in barcodes and QR codes; so I'm testing out 
+                  some new technologies and ideas.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  I'm responsible for the relabelling of our entire warehouse—I made 
+                  sure new labels are bigger, clearer and colourful enough to significantly 
+                  reduce human error.
+                </p>
+                <p className="text-sm mb-1 text-default-500 text-left">
+                  I'm not sure how or why, but I know there's a massive efficiency improvement 
+                  to be had by using barcodes and scanners somewhere in my life, and for some 
+                  reason I think it's got something to do with the mass of Pokémon cards 
+                  I've got lying around.
+                </p>
+              </Card.Content>
             </Card>
-          </Grid>
-          <Grid xs={12} sm={4}>
-            <Card hoverable onClick={()=>cardClicked(3)}>
-              <Text h5 weight="bold" transform="uppercase" >
-                Meta
-              </Text>
-              <Text h6>
-                ...not the Zuckerburg type...
-              </Text>
-              <br/>
-              <Text h6>
-                This website is my latest project. Built using Next.js - Next.js allows me to rapid prototype, expedite deployment and experiment with new technologies.
-              </Text>
-              <br/>
-              <Text h6 css={{marginBottom:"10px"}}>
-                Because everything is hosted via Vercel; I&apos;m able to commit my changes with git and have everything compiled and deployed live automatically. Pretty cool!
-              </Text>
-            </Card>
-          </Grid>
-        </Grid.Container>
+            
+          </div>
+        </div>
       </main>
-
-      <Footer />
-    </Container>
+      {/* Footer */}
+      <footer className="w-full container-70 mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
+          Copyleft (ɔ) 2026 Steven Gergus. <a href="https://github.com/gergy008/gergus-co-uk" style={{ textDecoration: 'underline' }}
+          target={"_blank"} rel="noreferrer">Source code freely available</a> under licence.
+        </p>
+      </footer>
+    </>
   )
 }
-
-
-/*
-        <p>
-          <a
-            href="https://vercel.com?utm_source=gergus.co.uk&utm_medium=project-portfolio&utm_campaign=gergus.co.uk"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Powered by&nbsp;
-            <span style={{alignItems: "flex-end", marginTop:"10px", height: "20px"}}>
-              <svg width={72} height={16} viewBox="0 0 283 64"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M141.04 16c-11.04 0-19 
-                  7.2-19 18s8.96 18 20 18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 
-                  2.21-5.09 3.5-8.54 3.5-4.79 0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 
-                  0-10.79-7.96-17.99-19-17.99zm-9.46 14.5c1.25-3.99 4.67-6.5 9.45-6.5
-                  4.79 0 8.21 2.51 9.45 6.5h-18.9zM248.72 16c-11.04 0-19 7.2-19 18s8.96 18 20 
-                  18c6.67 0 12.55-2.64 16.19-7.09l-7.65-4.42c-2.02 2.21-5.09 3.5-8.54 3.5-4.79 
-                  0-8.86-2.5-10.37-6.5h28.02c.22-1.12.35-2.28.35-3.5 0-10.79-7.96-17.99-19-17.99zm-9.45 
-                  14.5c1.25-3.99 4.67-6.5 9.45-6.5 4.79 0 8.21 2.51 9.45 6.5h-18.9zM200.24 34c0 6 
-                  3.92 10 10 10 4.12 0 7.21-1.87 8.8-4.92l7.68 4.43c-3.18 5.3-9.14 8.49-16.48 
-                  8.49-11.05 0-19-7.2-19-18s7.96-18 19-18c7.34 0 13.29 3.19 16.48 8.49l-7.68 
-                  4.43c-1.59-3.05-4.68-4.92-8.8-4.92-6.07 0-10 4-10 10zm82.48-29v46h-9V5h9zM36.95 
-                  0L73.9 64H0L36.95 0zm92.38 5l-27.71 48L73.91 5H84.3l17.32 30 17.32-30h10.39zm58.91 
-                  12v9.69c-1-.29-2.06-.49-3.2-.49-5.81 0-10 4-10 10V51h-9V17h9v9.2c0-5.08 5.91-9.2 13.2-9.2z" 
-                  fill={svgColor}/>
-              </svg>
-            </span>
-          </a>&nbsp;
-          <a
-            href="https://nextui.org/?utm_source=gergus.co.uk&utm_medium=project-portfolio&utm_campaign=gergus.co.uk"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            &amp; special thanks to NextUI!
-          </a>
-        </p>
-*/

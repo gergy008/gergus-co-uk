@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import Nav from './components/Nav.js'
-import Footer from './components/Footer.js'
+import Nav from '../components/Nav.js'
+import Footer from '../components/Footer.js'
 import Head from 'next/head'
 import Link from 'next/link';
 import { useTheme } from 'next-themes'
-import { Card, Container, Grid, Text, Image, Modal, useModal, Button } from "@nextui-org/react";
+import { Card, Modal, useDisclosure, Button } from "@heroui/react";
 
-export default function About() {
+export default function Flagboard() {
   const { theme, setTheme } = useTheme()
-  const { setVisible, bindings } = useModal();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const [ image, setImage ] = useState();
   const [ modalTitle, setModalTitle ] = useState();
 
   return (
-    <Container md>
+    <div className="max-w-4xl mx-auto px-4">
       <Head>
         <title>Steven Gergus Portfolio</title>
         <meta name="description" content="Steven Gergus | Portfolio Flagboard - My custom C# solution to an economical challenge" />
@@ -23,168 +23,169 @@ export default function About() {
 
 
       <Modal
-        scroll
-        fullScreen
-        closeButton
+        isOpen={isOpen}
+        onClose={onClose}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
-        {...bindings}
       >
         <Modal.Header>
-          <Text id="modal-title" size={18}>
+          <h2 id="modal-title" className="text-lg font-semibold">
             {modalTitle}
-          </Text>
+          </h2>
         </Modal.Header>
         <Modal.Body>
-          <Image showSkeleton src={image} alt={modalTitle} width={1920} height={1080} objectFit="scale-down"/>
+          <img src={image} alt={modalTitle} width={1920} height={1080} style={{objectFit: "scale-down"}}/>
         </Modal.Body>
         <Modal.Footer>
-          <Button auto flat color="error" onClick={() => setVisible(false)}>
+          <Button color="error" onPress={onClose}>
             Close
           </Button>
         </Modal.Footer>
       </Modal>
 
       <main className="">
-        <Container css={{marginTop: "6em", marginBottom: "6em", alignItems: "flex-start"}}>
-          <Text size={64} css={{ textGradient: "45deg, $red500 -50%, $yellow500 50%", marginBottom: "20px"}} weight="bold">
+        <div className="mt-24 mb-24 flex flex-col items-start">
+          <h1 
+            className="text-4xl font-bold mb-5"
+            style={{
+              background: "linear-gradient(45deg, #ef4444 -50%, #eab308 50%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
             Flagboard project.
-          </Text>
-        </Container>
-        <Container>
-          <Text h3>
+          </h1>
+        </div>
+        <div className="max-w-4xl mx-auto px-4">
+          <h3 className="text-xl font-semibold mb-4">
             I created this flagboard to make my role more efficient, and to reduce overall costs &amp; paper usage.
-          </Text>
+          </h3>
           <br/>
-          <Grid.Container gap={2} >
-            <Grid xs={12}>
-              <Image 
-                showSkeleton 
+          <div className="grid grid-cols-1 gap-4">
+            <div className="col-span-1">
+              <img 
                 src="/FlagboardShowcase.png" 
                 alt='Flagboard showcase image' 
                 width={1280} 
                 height={300} 
-                objectFit="scale-down"
+                style={{objectFit: "scale-down", cursor: "pointer"}}
                 onClick={() => {
-                  setVisible(true)
                   setImage("/FlagboardShowcase.png")
                   setModalTitle("The software running (without a clubspeed window occupying the corner)")
+                  onOpen()
                 }}
               />
-            </Grid>
-          </Grid.Container>
-          <Text size={22}>
+            </div>
+          </div>
+          <p className="text-lg mb-4">
             I started working at Daytona Motorsport Trafford late 2016 as a Track Marshal. I had been promoted to a Computer Operator (CO), which is a position
             responsible for assisting the Race Director on controlling track safety equipment, monitoring cameras, directing marshals on track via radio, and 
             controlling the digital flagboard for issuing race calls. A short while into this position, the business made a decision to record all race calls 
             and events during races on paper documents called <q>race sheets</q>, I presume to help defend the business if a serious injury occurred on circuit.
-          </Text>
+          </p>
           <br/>
-          <Text size={22}>
+          <p className="text-lg mb-4">
             It soon became evident that we were using a lot of paper on race sheets, with up to 30 sheets during the week and sometimes over 90 sheets during 
             busy weekends. This amount of paper was hard to store, it was uneconomical and also bad for the enviroment. I came up with an idea to create a
             new version of the software designed for the flagboard that would automatically record racecalls throughout the day and store them on the company
             network drive for access from any office computer. Files are lightweight, using no more than 70MB a year on data storage.
-          </Text>
+          </p>
           <br/>
-          <Text size={22}>
+          <p className="text-lg mb-4">
             The software was engineered using C# and Windows Forms. The design of the UI is closely similar to the software it replaced in order to make it
             easier for the other Hosts, Race Directors and Management to use in a pinch. The CO would set up the session in the software at the start of the race.
             The software would monitor Clubspeed APIs and display karts in the software that were currently on the track. All race calls and events that were
             logged during the session were saved to file at the end of the race session. Because of the importance of the data, log files were used as a backup
             to ensure that if the software suffered a failure during a session that had a serious incident occur, race calls could still be extracted.
-          </Text>
+          </p>
           <br/>
-          <Text size={22}>
+          <p className="text-lg mb-4">
             I&apos;d planned to introduce translation support for international customers, but this was blocked from a senior level. It was thought that
             if we needed to use translations on the board, then it would indicate the drivers hadn&apos;t understood the safety briefing in English;
             If the driver doesn&apos;t understand the safety briefing then they shouldn&apos;t be on circuit.
-          </Text>
+          </p>
           <br/>
-          <Text h3>
+          <h3 className="text-xl font-semibold mb-4">
             Code
-          </Text>
-          <Text size={22}>
+          </h3>
+          <p className="text-lg mb-4">
             Here are some examples of code I had written that allows certain parts of the software to function, namely the displaypanel component and
             internal debugger for logging to file.
-          </Text>
-          <Grid.Container gap={2} >
-            <Grid xs={12} sm={6}>
-              <Image 
-                showSkeleton 
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="col-span-1">
+              <img 
                 src="/FlagboardCodeExample1.png" 
                 alt='Image #1 showing example flagboard code' 
                 width={1280} 
                 height={300} 
-                objectFit="scale-down"
+                style={{objectFit: "scale-down", cursor: "pointer"}}
                 onClick={() => {
-                  setVisible(true)
                   setImage("/FlagboardCodeExample1.png")
                   setModalTitle("Beginning of the Display ShowBoard function, which displays a standard race call.")
+                  onOpen()
                 }}
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <Image 
-                showSkeleton 
+            </div>
+            <div className="col-span-1">
+              <img 
                 src="/FlagboardCodeExample2.png" 
                 alt='Image #2 showing example flagboard code' 
                 width={1280} 
                 height={300} 
-                objectFit="scale-down"
+                style={{objectFit: "scale-down", cursor: "pointer"}}
                 onClick={() => {
-                  setVisible(true)
                   setImage("/FlagboardCodeExample2.png")
                   setModalTitle("The ParseDRNumbers function - which converts a string of driver numbers into a List object")
+                  onOpen()
                 }}
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <Image 
-                showSkeleton 
+            </div>
+            <div className="col-span-1">
+              <img 
                 src="/FlagboardCodeExample3.png" 
                 alt='Image #3 showing example flagboard code' 
                 width={1280} 
                 height={300} 
-                objectFit="scale-down"
+                style={{objectFit: "scale-down", cursor: "pointer"}}
                 onClick={() => {
-                  setVisible(true)
                   setImage("/FlagboardCodeExample3.png")
                   setModalTitle("Public facing debugger functions - these subtask operations to write to file.")
+                  onOpen()
                 }}
               />
-            </Grid>
-            <Grid xs={12} sm={6}>
-              <Image 
-                showSkeleton 
+            </div>
+            <div className="col-span-1">
+              <img 
                 src="/FlagboardCodeExample2.png" 
                 alt='Image #4 showing example flagboard code' 
                 width={1280} 
                 height={300} 
-                objectFit="scale-down"
+                style={{objectFit: "scale-down", cursor: "pointer"}}
                 onClick={() => {
-                  setVisible(true)
                   setImage("/FlagboardCodeExample4.png")
                   setModalTitle("Debugger write to file function - Takes a debugger string and writes it to file.")
+                  onOpen()
                 }}
               />
-            </Grid>
-          </Grid.Container>
+            </div>
+          </div>
           <br/>
           <Card color={"error"}>
-            <Text h4>
+            <h4 className="text-lg font-semibold mb-2">
               Cookie Notice
-            </Text>
-            <Text>
+            </h4>
+            <p>
               Playing any of these videos may allow YouTube to store and access cookies on your device.
-            </Text>
+            </p>
           </Card>
           <br/>
-          <Text h3>
+          <h3 className="text-xl font-semibold mb-4">
             Flagboard in use on the race circuit
-          </Text>
-          <Grid.Container gap={2} >
-            <Grid xs={6}>
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="col-span-1">
               <iframe 
                 width="560" 
                 height="315" 
@@ -194,8 +195,8 @@ export default function About() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen>
               </iframe>
-            </Grid>
-            <Grid xs={6}>
+            </div>
+            <div className="col-span-1">
               <iframe 
                 width="560" 
                 height="315" 
@@ -205,16 +206,16 @@ export default function About() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowFullScreen>
               </iframe>
-            </Grid>
-          </Grid.Container>
+            </div>
+          </div>
           <br/>
-          <Text h3>
+          <h3 className="text-xl font-semibold mb-4">
             Hardware Integration
-          </Text>
-          <Text size={22}>
+          </h3>
+          <p className="text-lg mb-4">
             The race circuit has a number of yellow and red flashing safety lights issued around the track. Prior to me leaving the company, I had planned
             to create and implement hardware to control the track lights from the software. Here&apos;s a video of a working prototype
-          </Text>
+          </p>
           <br/>
           <iframe 
             width="560" 
@@ -226,29 +227,29 @@ export default function About() {
             allowFullScreen>
           </iframe>
           <br/>
-          <Text size={22}>
+          <p className="text-lg mb-4">
             This prototype worked through a common ATmega328 microcontroller. The software would open a serial connection with the microcontroller over USB
             and transmit case-sensitive letters to and from as sort of a crude protocol. A letter <q>R</q> send from the microcontroller to the serial listener
             for example, would trigger the event in the above video; activation of the red flashing light. The software would reply that the lights had been activated
             triggering the flashing feedback light on the switch.
-          </Text>
+          </p>
           <br/>  
-          <Text h3>
+          <h3 className="text-xl font-semibold mb-4">
             Is that all?
-          </Text>
-          <Text size={22}>
+          </h3>
+          <p className="text-lg mb-4">
             Absolutely not. I will update this article in the future to include more information about how I used Azure to distrubute the software, introduce licencing
             for other circuits and auto-update, plus some of the other cool things I added to the project that I am proud of and made this so much easier.
-          </Text>
+          </p>
           <br/>  
-          <Text size={16}>
+          <p className="text-sm">
             Daytona Motorsport and TeamSport are registered trademarks of their respective companies.
-          </Text>
-        </Container>
+          </p>
+        </div>
       </main>
 
       <Footer />
-    </Container>
+    </div>
   )
 }
 
