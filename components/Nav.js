@@ -137,13 +137,6 @@ export default function Nav() {
               Contact
             </Link>
 
-            <Link
-              href="/upload"
-              className="text-decoration-none hover:opacity-70 hover:underline transition-all duration-200"
-            >
-              Upload
-            </Link>
-            
             {/* ==============================================================
                 THEME TOGGLE BUTTON
                 ==============================================================
