@@ -20,7 +20,7 @@ import Head from 'next/head'
 import HCaptcha from "@hcaptcha/react-hcaptcha"
 
 // Custom navigation component
-import Nav from '../components/Nav'
+import Nav from '@/components/Nav'
 
 // ============================================================================
 // COMPONENT: Contact Page

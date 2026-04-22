@@ -1,4 +1,5 @@
 import { list } from "@vercel/blob"
+import { readSession } from "@/lib/auth-session"
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -6,6 +7,12 @@ export default async function handler(req, res) {
   }
 
   try {
+    const isLocalDevBypass = process.env.NODE_ENV !== "production"
+    const session = await readSession(req)
+    if (!isLocalDevBypass && session?.scope !== "passkey" && session?.scope !== "password") {
+      return res.status(403).json({ error: "Authentication required to view history" })
+    }
+
     const { blobs } = await list({
       limit: 200,
     })

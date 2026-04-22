@@ -23,7 +23,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 // Custom navigation component
-import Nav from '../components/Nav'
+import Nav from '@/components/Nav'
 
 // ============================================================================
 // COMPONENT: Home Page

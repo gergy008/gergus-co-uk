@@ -16,7 +16,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 // Custom navigation component
-import Nav from '../components/Nav'
+import Nav from '@/components/Nav'
 
 // ============================================================================
 // COMPONENT: About Page

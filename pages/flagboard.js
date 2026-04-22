@@ -19,7 +19,7 @@ import { useTheme } from 'next-themes'
 import Head from 'next/head'
 
 // Custom navigation component
-import Nav from '../components/Nav'
+import Nav from '@/components/Nav'
 
 // ============================================================================
 // COMPONENT: Flagboard Page

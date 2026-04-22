@@ -1,4 +1,4 @@
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import { ThemeProvider as NextThemeProvider } from 'next-themes'
 
 function MyApp({ Component, pageProps }) {

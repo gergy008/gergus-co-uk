@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Nav from '../components/Nav.js'
-import Footer from '../components/Footer.js'
+import Nav from '@/components/Nav.js'
+import Footer from '@/components/Footer.js'
 import Head from 'next/head'
 import { useTheme } from 'next-themes'
 import { Button } from "@heroui/react";
