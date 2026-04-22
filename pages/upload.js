@@ -179,13 +179,13 @@ export default function UploadPage() {
                 <video
                   src={lastUpload.url}
                   controls
-                  className="max-w-full rounded-md mb-4"
+                  className="w-full max-w-full max-h-[55vh] sm:max-h-[60vh] object-contain rounded-md mb-4 bg-black/5 dark:bg-white/5"
                 />
               ) : (
                 <img
                   src={lastUpload.url}
                   alt="Latest uploaded media preview"
-                  className="max-w-full rounded-md mb-4"
+                  className="w-full max-w-full max-h-[55vh] sm:max-h-[60vh] object-contain rounded-md mb-4 bg-black/5 dark:bg-white/5"
                 />
               )}
               <div className="flex flex-col gap-2 text-sm">
