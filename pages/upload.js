@@ -3,7 +3,12 @@ import Head from "next/head"
 import { upload } from "@vercel/blob/client"
 import Nav from "../components/Nav"
 
-const ACCEPTED_TYPES = "image/jpeg,image/png,image/webp,image/gif"
+const ACCEPTED_TYPES = "image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime"
+
+const isVideoItem = (item) => {
+  if (item.type?.startsWith("video/")) return true
+  return /\.(mp4|webm|mov)$/i.test(item.pathname || "")
+}
 
 export default function UploadPage() {
   const [isUploading, setIsUploading] = useState(false)
@@ -100,10 +105,10 @@ export default function UploadPage() {
   return (
     <>
       <Head>
-        <title>Upload Images | gergus.co.uk</title>
+        <title>Upload Media | gergus.co.uk</title>
         <meta
           name="description"
-          content="Upload images to Vercel Blob and generate embeddable links."
+          content="Upload images and videos to Vercel Blob and generate embeddable links."
         />
       </Head>
 
@@ -111,9 +116,9 @@ export default function UploadPage() {
 
       <main className="min-h-screen py-8 px-4 sm:px-6 lg:px-8 pt-24">
         <div className="w-full container-70 mx-auto">
-          <h1 className="text-4xl font-extrabold pb-2 mb-4 gradient-red-yellow">Image Upload</h1>
+          <h1 className="text-4xl font-extrabold pb-2 mb-4 gradient-red-yellow">Media Upload</h1>
           <p className="text-default-500 mb-8">
-            Upload with file picker or paste an image from your clipboard.
+            Upload images/videos with file picker, or paste images from your clipboard.
           </p>
 
           <section className="rounded-lg border border-black/10 dark:border-white/10 p-5 mb-6">
@@ -127,6 +132,9 @@ export default function UploadPage() {
                   disabled={isUploading}
                 />
               </label>
+              <p className="text-xs text-default-500">
+                Supported file uploads: JPG, PNG, WEBP, GIF, MP4, WEBM, MOV.
+              </p>
 
               <div
                 className="rounded-md border border-dashed border-black/20 dark:border-white/20 p-6 text-sm text-default-500"
@@ -146,11 +154,19 @@ export default function UploadPage() {
           {lastUpload && (
             <section className="rounded-lg border border-black/10 dark:border-white/10 p-5 mb-6">
               <h2 className="text-xl font-semibold mb-3">Latest upload</h2>
-              <img
-                src={lastUpload.url}
-                alt="Latest uploaded image preview"
-                className="max-w-full rounded-md mb-4"
-              />
+              {isVideoItem(lastUpload) ? (
+                <video
+                  src={lastUpload.url}
+                  controls
+                  className="max-w-full rounded-md mb-4"
+                />
+              ) : (
+                <img
+                  src={lastUpload.url}
+                  alt="Latest uploaded media preview"
+                  className="max-w-full rounded-md mb-4"
+                />
+              )}
               <div className="flex flex-col gap-2 text-sm">
                 <button onClick={() => copyToClipboard(lastUpload.url)}>
                   Copy direct URL (Discord-friendly)
@@ -167,8 +183,8 @@ export default function UploadPage() {
 
           {uploads.length > 0 && (
             <section className="rounded-lg border border-black/10 dark:border-white/10 p-5">
-              <h2 className="text-xl font-semibold mb-3">All uploaded images</h2>
-              <p className="text-sm text-default-500 mb-4">Click any image to copy its direct link.</p>
+              <h2 className="text-xl font-semibold mb-3">All uploaded media</h2>
+              <p className="text-sm text-default-500 mb-4">Click any tile to copy its direct link.</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {uploads.map((item) => (
                   <button
@@ -178,11 +194,20 @@ export default function UploadPage() {
                     className="group rounded-md border border-black/10 dark:border-white/10 p-2 text-left transition hover:border-black/30 dark:hover:border-white/30"
                     title="Click to copy image link"
                   >
-                    <img
-                      src={item.url}
-                      alt="Uploaded image"
-                      className="w-full aspect-square object-contain rounded bg-black/5 dark:bg-white/5"
-                    />
+                    {isVideoItem(item) ? (
+                      <video
+                        src={item.url}
+                        muted
+                        playsInline
+                        className="w-full aspect-square object-contain rounded bg-black/5 dark:bg-white/5"
+                      />
+                    ) : (
+                      <img
+                        src={item.url}
+                        alt="Uploaded media"
+                        className="w-full aspect-square object-contain rounded bg-black/5 dark:bg-white/5"
+                      />
+                    )}
                     <p className="text-xs mt-2 truncate text-default-500 group-hover:text-default-700 dark:group-hover:text-default-300">
                       {copiedUrl === item.url ? "Copied!" : item.pathname}
                     </p>

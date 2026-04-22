@@ -12,7 +12,15 @@ export default async function handler(req, res) {
       onBeforeGenerateToken: async (_pathname, clientPayload) => {
         return {
           addRandomSuffix: true,
-          allowedContentTypes: ["image/jpeg", "image/png", "image/webp", "image/gif"],
+          allowedContentTypes: [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif",
+            "video/mp4",
+            "video/webm",
+            "video/quicktime",
+          ],
           tokenPayload: clientPayload ?? null,
         }
       },
