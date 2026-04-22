@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import Head from "next/head"
 import { upload } from "@vercel/blob/client"
 import Nav from "../components/Nav"
@@ -11,6 +11,7 @@ const isVideoItem = (item) => {
 }
 
 export default function UploadPage() {
+  const mobileUploadInputRef = useRef(null)
   const [isUploading, setIsUploading] = useState(false)
   const [isLoadingUploads, setIsLoadingUploads] = useState(true)
   const [error, setError] = useState("")
@@ -137,11 +138,31 @@ export default function UploadPage() {
               </p>
 
               <div
-                className="rounded-md border border-dashed border-black/20 dark:border-white/20 p-6 text-sm text-default-500"
+                className="hidden sm:block rounded-md border border-dashed border-black/20 dark:border-white/20 p-6 text-sm text-default-500"
                 onPaste={onPaste}
                 tabIndex={0}
               >
                 Click this box and press <b>Ctrl+V</b> to paste an image.
+              </div>
+
+              <div className="sm:hidden">
+                <input
+                  ref={mobileUploadInputRef}
+                  type="file"
+                  multiple
+                  accept={ACCEPTED_TYPES}
+                  onChange={onFileInput}
+                  disabled={isUploading}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => mobileUploadInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="w-full rounded-md border border-black/20 dark:border-white/20 p-4 text-sm"
+                >
+                  Upload from phone
+                </button>
               </div>
 
               {isUploading && (
